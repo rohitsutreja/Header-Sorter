@@ -353,7 +353,7 @@ if __name__ == "__main__":
     parser.add_argument("files", nargs='*', help="List of C++ files to sort")
     
     # Git flags
-    parser.add_argument("--git", action="store_true", help="Process all changed files (working tree)")
+    parser.add_argument("--local", action="store_true", help="Process all changed files (working tree)")
     parser.add_argument("--staged", action="store_true", help="Process only staged files (index)")
     
     # MR / Diff flag
@@ -374,9 +374,9 @@ if __name__ == "__main__":
     elif args.mr:
         print(f"--- 🌳 Detecting Changes against {args.mr}... ---")
         files_to_process.extend(get_git_changed_files(mode="mr", target_branch=args.mr))
-        
-    elif args.git:
-        print("--- 🌳 Detecting All Git Changes... ---")
+
+    elif args.local:
+        print("--- 🌳 Detecting Local Git Changes... ---")
         files_to_process.extend(get_git_changed_files(mode="working"))
     
     if args.files:
@@ -394,5 +394,6 @@ if __name__ == "__main__":
     else:
         print("ℹ️  No files to process. Usage examples:")
         print("   python include_sorter.py file1.cpp")
+        print("   python include_sorter.py --local")
         print("   python include_sorter.py --staged")
-        print("   python include_sorter.py --mr origin/main")
+        print("   python include_sorter.py --mr origin/develop")
